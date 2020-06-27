@@ -63,6 +63,10 @@ mongoose.connection.on('open', () => {
         const doc = await Akim.findOne({
             chatId: ctx.message.chat.id
         });
+        const lastInterval = ctx.message.date - doc.lastAkimMessage
+        if (ctx.message.date < (Date.now() / 1000 | 0) || lastInterval == 0) {
+            return
+        }
         if (doc) {
             doc.messageCounter += 1
             if (doc.messageCounter > 120) {
@@ -78,7 +82,7 @@ mongoose.connection.on('open', () => {
                 }
             }
 
-            if (ctx.message.text.match(regex) || ctx.message.text.match(regex)) {
+            if (ctx.message.text ? ctx.message.text.match(regex) : ctx.message.caption.match(regex)) {
                 ctx.reply(helper.time(ctx.message.date - doc.lastAkimMessage))
                 const lastInterval = ctx.message.date - doc.lastAkimMessage
                 doc.maxTime = doc.maxTime > lastInterval ? doc.maxTime : lastInterval
