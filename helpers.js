@@ -40,8 +40,15 @@ maxTime = (seconds) => {
   }
 }
 
+const regex = /(^|\s)аким|асланов|akim|aslanov|aким?\D(?=\s|$)/gi
+
+matchMessage = (message) => {
+    return message.match(regex)
+  }
+
 module.exports = {
   time: time,
   getNoun: getNoun,
-  maxTime: maxTime
+  maxTime: maxTime,
+  matchMessage: matchMessage
 }

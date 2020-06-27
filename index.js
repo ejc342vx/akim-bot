@@ -48,7 +48,6 @@ mongoose.connection.on('open', () => {
 
     const Akim = mongoose.model('Akim', AkimSchema, 'akim');
     const words = ['Омерзительно.', 'Отвратительно.', 'Маразм.', 'Бред какой-то.', 'Наркоманы какие-то.']
-    const regex = /(^|\s)аким|асланов|akim|aslanov|aким?\D(?=\s|$)/gi
 
     bot.command('akimstats', async (ctx) => {
         const doc = await Akim.findOne({
@@ -82,7 +81,7 @@ mongoose.connection.on('open', () => {
                 }
             }
 
-            if (ctx.message.text ? ctx.message.text.match(regex) : ctx.message.caption.match(regex)) {
+            if (helper.matchMessage(ctx.message.text || ctx.message.caption || '')) {
                 ctx.reply(helper.time(ctx.message.date - doc.lastAkimMessage))
                 const lastInterval = ctx.message.date - doc.lastAkimMessage
                 doc.maxTime = doc.maxTime > lastInterval ? doc.maxTime : lastInterval
