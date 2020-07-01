@@ -65,10 +65,10 @@ mongoose.connection.on('open', () => {
         const doc = await Akim.findOne({
             chatId: ctx.message.chat.id
         });
-        const lastInterval = ctx.message.date - doc.lastAkimMessage
         if (ctx.message.date < (Date.now() / 1000 | 0) || lastInterval == 0) {
             return
         }
+        const lastInterval = ctx.message.date - doc.lastAkimMessage
         if (doc) {
             doc.messageCounter += 1
             if (doc.messageCounter > 120) {
