@@ -50,6 +50,9 @@ mongoose.connection.on('open', () => {
     const words = ['Омерзительно.', 'Отвратительно.', 'Маразм.', 'Бред какой-то.', 'Наркоманы какие-то.']
 
     bot.command('akimstats', async (ctx) => {
+        if (ctx.message.date < (Date.now() / 1000 | 0)) {
+            return
+        }
         const doc = await Akim.findOne({
             chatId: ctx.message.chat.id
         });
