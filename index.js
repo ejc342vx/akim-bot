@@ -61,6 +61,18 @@ mongoose.connection.on('open', () => {
         }
     })
 
+    bot.command('lastmessage', async (ctx) => {
+        if (ctx.message.date < (Date.now() / 1000 | 0)) {
+            return
+        }
+        const doc = await Akim.findOne({
+            chatId: ctx.message.chat.id
+        });
+        if (doc && doc.lastAkimMessage) {
+            ctx.reply(helper.currentTime(ctx.message.date - doc.lastAkimMessage))
+        }
+    })
+
     bot.on(['text', 'photo', 'sticker', 'audio', 'video', 'document', 'forward'], async (ctx) => {
         const doc = await Akim.findOne({
             chatId: ctx.message.chat.id
