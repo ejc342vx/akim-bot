@@ -43,6 +43,5 @@ maxTime = (seconds) => {
 module.exports = {
   time: time,
   getNoun: getNoun,
-  maxTime: maxTime,
-  matchMessage: matchMessage
+  maxTime: maxTime
 }
