@@ -65,7 +65,7 @@ mongoose.connection.on('open', () => {
         const doc = await Akim.findOne({
             chatId: ctx.message.chat.id
         });
-        if (ctx.message.date < (Date.now() / 1000 | 0) || ctx.message.date - doc.lastAkimMessage == 0) {
+        if (ctx.message.date < (Date.now() / 1000 | 0)) { // || ctx.message.date - doc.lastAkimMessage == 0
             return
         }
         if (doc) {
