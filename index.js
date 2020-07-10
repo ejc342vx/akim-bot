@@ -47,7 +47,7 @@ mongoose.connection.on('open', () => {
     });
 
     const Akim = mongoose.model('Akim', AkimSchema, 'akim');
-    const words = ['Омерзительно.', 'Отвратительно.', 'Маразм.', 'Бред какой-то.', 'Наркоманы какие-то.']
+    const words = ['Омерзительно.', 'Отвратительно.', 'Маразм.', 'Бред какой-то.', 'Наркоманы какие-то.', 'Не пишите такой маразм больше никогда.']
 
     bot.command('akimstats', async (ctx) => {
         if (ctx.message.date < (Date.now() / 1000 | 0)) {
@@ -83,12 +83,21 @@ mongoose.connection.on('open', () => {
                 }
             }
 
-            if (helper.matchMessage(ctx.message.text || ctx.message.caption || '')) {
-                ctx.reply(helper.time(ctx.message.date - doc.lastAkimMessage))
-                const lastInterval = ctx.message.date - doc.lastAkimMessage
-                doc.maxTime = doc.maxTime > lastInterval ? doc.maxTime : lastInterval
-                doc.lastAkimMessage = ctx.message.date
+            if (ctx.message.text && ctx.message.text.length > 500 || ctx.message.caption && ctx.message.caption.length > 500) {
+                ctx.reply('Я даже дальше середины это читать не хочу.', Extra.inReplyTo(ctx.update.message.message_id))
             }
+
+            const regex = /(^|\s)аким|асланов|akim|aslanov|aким?\D(?=\s|$)/gi
+            
+            if (ctx.message.text || ctx.message.caption) {
+                if ((ctx.message.text || ctx.message.caption).match(regex)) {
+                    ctx.reply(helper.time(ctx.message.date - doc.lastAkimMessage))
+                    const lastInterval = ctx.message.date - doc.lastAkimMessage
+                    doc.maxTime = doc.maxTime > lastInterval ? doc.maxTime : lastInterval
+                    doc.lastAkimMessage = ctx.message.date
+                }
+            }
+            
             doc.save()
         } else {
             const Akim1 = new Akim({
