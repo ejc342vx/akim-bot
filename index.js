@@ -48,36 +48,37 @@ mongoose.connection.on('open', () => {
 
     const Akim = mongoose.model('Akim', AkimSchema, 'akim');
     const words = ['Омерзительно.', 'Отвратительно.', 'Маразм.', 'Бред какой-то.', 'Наркоманы какие-то.', 'Не пишите такой маразм больше никогда.']
+    const regex = /(^|\s)аким|асланов|akim|aslanov|aким?\D(?=\s|$)/gi
+
+    const findDoc = chatId => Akim.findOne({
+        chatId: chatId
+    });
+
+    const checkMessageDate = messageDate => messageDate < (Date.now() / 1000 | 0)
 
     bot.command('akimstats', async (ctx) => {
-        if (ctx.message.date < (Date.now() / 1000 | 0)) {
+        if (checkMessageDate(ctx.message.date)) {
             return
         }
-        const doc = await Akim.findOne({
-            chatId: ctx.message.chat.id
-        });
+        const doc = await findDoc(ctx.message.chat.id)
         if (doc && doc.maxTime) {
             ctx.reply(helper.maxTime(doc.maxTime))
         }
     })
 
     bot.command('lastmessage', async (ctx) => {
-        if (ctx.message.date < (Date.now() / 1000 | 0)) {
+        if (checkMessageDate(ctx.message.date)) {
             return
         }
-        const doc = await Akim.findOne({
-            chatId: ctx.message.chat.id
-        });
+        const doc = await findDoc(ctx.message.chat.id)
         if (doc && doc.lastAkimMessage) {
             ctx.reply(helper.currentTime(ctx.message.date - doc.lastAkimMessage))
         }
     })
 
     bot.on(['text', 'photo', 'sticker', 'audio', 'video', 'document', 'forward'], async (ctx) => {
-        const doc = await Akim.findOne({
-            chatId: ctx.message.chat.id
-        });
-        if (ctx.message.date < (Date.now() / 1000 | 0)) { // || ctx.message.date - doc.lastAkimMessage == 0
+        const doc = await findDoc(ctx.message.chat.id)
+        if (checkMessageDate(ctx.message.date)) {  //|| ctx.message.date - doc.lastAkimMessage == 0
             return
         }
         if (doc) {
@@ -99,8 +100,6 @@ mongoose.connection.on('open', () => {
                 ctx.reply('Я даже дальше середины это читать не хочу.', Extra.inReplyTo(ctx.update.message.message_id))
             }
 
-            const regex = /(^|\s)аким|асланов|akim|aslanov|aким?\D(?=\s|$)/gi
-            
             if (ctx.message.text || ctx.message.caption) {
                 if ((ctx.message.text || ctx.message.caption).match(regex)) {
                     ctx.reply(helper.time(ctx.message.date - doc.lastAkimMessage))
@@ -109,7 +108,6 @@ mongoose.connection.on('open', () => {
                     doc.lastAkimMessage = ctx.message.date
                 }
             }
-            
             doc.save()
         } else {
             const Akim1 = new Akim({
