@@ -45,11 +45,11 @@ currentTime = (seconds) => {
       return `${getNoun(seconds, 'прошла', 'прошло', 'прошло')} ${seconds} ${getNoun(seconds, 'секунда', 'секунды', 'секунд')}`
   } else if (seconds < 3600) {
       const m = Math.floor(seconds / 60)
-      return `${getNoun(seconds, 'прошла', 'прошло', 'прошло')} ${m} ${getNoun(m, 'минута', 'минуты', 'минут')}`
+      return `${getNoun(m, 'прошла', 'прошло', 'прошло')} ${m} ${getNoun(m, 'минута', 'минуты', 'минут')}`
   } else if (seconds >= 3600) {
       let h = seconds / 3600 ^ 0
       let m = (seconds - h * 3600) / 60 ^ 0
-      return `${getNoun(seconds, 'прошел', 'прошло', 'прошло')} ${h} ${getNoun(h, 'час', 'часа', 'часов')} ${m} ${getNoun(m, 'минута', 'минуты', 'минут')}`
+      return `${getNoun(h, 'прошел', 'прошло', 'прошло')} ${h} ${getNoun(h, 'час', 'часа', 'часов')} ${m} ${getNoun(m, 'минута', 'минуты', 'минут')}`
   }
 }
 
