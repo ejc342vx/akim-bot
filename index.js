@@ -88,6 +88,7 @@ mongoose.connection.on('open', () => {
   bot.on('new_chat_members', async ctx => {
     const doc = await findDoc(ctx.message.chat.id);
     if (doc && ctx.update.message.from.id == 4114688) {
+      doc.lehaCounter += 1;
       ctx.reply('Леха врывается', Extra.inReplyTo(ctx.update.message.message_id));
     }
   });
@@ -112,9 +113,9 @@ mongoose.connection.on('open', () => {
         }
       }
 
-      if (ctx.update.message.from.id == 366160795) {
+      if (ctx.update.message.from.id == 4114688) {
         doc.lehaCounter += 1;
-        if (doc.lehaCounter > 13) {
+        if (doc.lehaCounter > 5) {
           doc.stevenCounter = 0;
           ctx.reply(
             lehaWords[Math.floor(Math.random() * lehaWords.length)],
