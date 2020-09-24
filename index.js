@@ -94,7 +94,7 @@ mongoose.connection.on('open', () => {
     const doc = await findDoc(ctx.message.chat.id);
     if (doc && ctx.update.message.from.id == 4114688) {
       doc.lehaCounter += 1;
-      ctx.reply('Леха врывается', Extra.inReplyTo(ctx.update.message.message_id));
+      ctx.reply('Гудков врывается', Extra.inReplyTo(ctx.update.message.message_id));
     }
   });
 
