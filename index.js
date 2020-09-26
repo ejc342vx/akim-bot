@@ -90,13 +90,13 @@ mongoose.connection.on('open', () => {
     }
   });
 
-  bot.on('new_chat_members', async ctx => {
-    const doc = await findDoc(ctx.message.chat.id);
-    if (doc && ctx.update.message.from.id == 4114688) {
-      doc.lehaCounter += 1;
-      ctx.reply('Гудков врывается', Extra.inReplyTo(ctx.update.message.message_id));
-    }
-  });
+  // bot.on('new_chat_members', async ctx => {
+  //   const doc = await findDoc(ctx.message.chat.id);
+  //   if (doc && ctx.update.message.from.id == 4114688) {
+  //     doc.lehaCounter += 1;
+  //     ctx.reply('Гудков врывается', Extra.inReplyTo(ctx.update.message.message_id));
+  //   }
+  // });
 
   bot.on(['text', 'photo', 'sticker', 'audio', 'video', 'document', 'forward'], async ctx => {
     const doc = await findDoc(ctx.message.chat.id);
@@ -110,24 +110,24 @@ mongoose.connection.on('open', () => {
         ctx.reply(words[Math.floor(Math.random() * words.length)], Extra.inReplyTo(ctx.update.message.message_id));
       }
 
-      if (ctx.update.message.from.id == 366160795) {
-        doc.stevenCounter += 1;
-        if (doc.stevenCounter > 13) {
-          doc.stevenCounter = 0;
-          ctx.reply('Держи в курсе.', Extra.inReplyTo(ctx.update.message.message_id));
-        }
-      }
+      // if (ctx.update.message.from.id == 366160795) {
+      //   doc.stevenCounter += 1;
+      //   if (doc.stevenCounter > 13) {
+      //     doc.stevenCounter = 0;
+      //     ctx.reply('Держи в курсе.', Extra.inReplyTo(ctx.update.message.message_id));
+      //   }
+      // }
 
-      if (ctx.update.message.from.id == 4114688) {
-        doc.lehaCounter += 1;
-        if (doc.lehaCounter > 5) {
-          doc.lehaCounter = 0;
-          ctx.reply(
-            lehaWords[Math.floor(Math.random() * lehaWords.length)],
-            Extra.inReplyTo(ctx.update.message.message_id)
-          );
-        }
-      }
+      // if (ctx.update.message.from.id == 4114688) {
+      //   doc.lehaCounter += 1;
+      //   if (doc.lehaCounter > 5) {
+      //     doc.lehaCounter = 0;
+      //     ctx.reply(
+      //       lehaWords[Math.floor(Math.random() * lehaWords.length)],
+      //       Extra.inReplyTo(ctx.update.message.message_id)
+      //     );
+      //   }
+      // }
 
       if (ctx.message.text || ctx.message.caption) {
         const message = ctx.message.text || ctx.message.caption;
