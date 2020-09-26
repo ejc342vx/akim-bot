@@ -118,16 +118,16 @@ mongoose.connection.on('open', () => {
       //   }
       // }
 
-      // if (ctx.update.message.from.id == 4114688) {
-      //   doc.lehaCounter += 1;
-      //   if (doc.lehaCounter > 5) {
-      //     doc.lehaCounter = 0;
-      //     ctx.reply(
-      //       lehaWords[Math.floor(Math.random() * lehaWords.length)],
-      //       Extra.inReplyTo(ctx.update.message.message_id)
-      //     );
-      //   }
-      // }
+      if (ctx.update.message.from.id == 4114688) {
+        doc.lehaCounter += 1;
+        if (doc.lehaCounter > 25) {
+          doc.lehaCounter = 0;
+          ctx.reply(
+            lehaWords[Math.floor(Math.random() * lehaWords.length)],
+            Extra.inReplyTo(ctx.update.message.message_id)
+          );
+        }
+      }
 
       if (ctx.message.text || ctx.message.caption) {
         const message = ctx.message.text || ctx.message.caption;
