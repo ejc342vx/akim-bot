@@ -70,6 +70,10 @@ mongoose.connection.on('open', () => {
 
   const checkMessageDate = messageDate => ((Date.now() / 1000) | 0) - messageDate > 10;
 
+  bot.hears(['плеер', 'плееры', 'плеера',	'плееров', 'плееру','плеерам', 'плеер', 'плееры', 'плеером', 'плеерами', 'плеере','плеерах'], ctx => {
+    ctx.reply('Иди на хуй со своим плеером, сука.')
+  })
+
   bot.command('akimstats', async ctx => {
     if (checkMessageDate(ctx.message.date)) {
       return;
