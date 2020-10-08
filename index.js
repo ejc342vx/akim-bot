@@ -143,8 +143,8 @@ mongoose.connection.on('open', () => {
           doc.maxTime = doc.maxTime > lastInterval ? doc.maxTime : lastInterval;
           doc.lastAkimMessage = ctx.message.date;
         }
-
-        if (message.toLowerCase.includes('плеер')) {
+        
+        if (message.toLowerCase().includes('плеер')) {
           ctx.reply('Иди на хуй со своим плеером, сука.', Extra.inReplyTo(ctx.update.message.message_id))
         }
 
