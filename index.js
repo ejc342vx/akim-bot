@@ -70,9 +70,9 @@ mongoose.connection.on('open', () => {
 
   const checkMessageDate = messageDate => ((Date.now() / 1000) | 0) - messageDate > 10;
 
-  bot.hears(['Плеер', 'Плееры', 'Плеера',	'Плееров', 'Плееру','Плеерам', 'Плеером', 'Плеерами', 'Плеере','Плеерах', 'плеер', 'плееры', 'плеера',	'плееров', 'плееру','плеерам', 'плеером', 'плеерами', 'плеере','плеерах'], ctx => {
-    ctx.reply('Иди на хуй со своим плеером, сука.', Extra.inReplyTo(ctx.update.message.message_id))
-  })
+  // bot.hears(['Плеер', 'Плееры', 'Плеера',	'Плееров', 'Плееру','Плеерам', 'Плеером', 'Плеерами', 'Плеере','Плеерах', 'плеер', 'плееры', 'плеера',	'плееров', 'плееру','плеерам', 'плеером', 'плеерами', 'плеере','плеерах'], ctx => {
+  //   ctx.reply('Иди на хуй со своим плеером, сука.', Extra.inReplyTo(ctx.update.message.message_id))
+  // })
 
   bot.command('akimstats', async ctx => {
     if (checkMessageDate(ctx.message.date)) {
@@ -142,6 +142,10 @@ mongoose.connection.on('open', () => {
           const lastInterval = ctx.message.date - doc.lastAkimMessage;
           doc.maxTime = doc.maxTime > lastInterval ? doc.maxTime : lastInterval;
           doc.lastAkimMessage = ctx.message.date;
+        }
+
+        if (message.toLowerCase.includes('плеер')) {
+          ctx.reply('Иди на хуй со своим плеером, сука.', Extra.inReplyTo(ctx.update.message.message_id))
         }
 
         if (message.length > 500) {
